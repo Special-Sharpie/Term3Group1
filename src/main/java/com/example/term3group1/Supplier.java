@@ -17,7 +17,7 @@ public class Supplier {
 
     //getters and setters for the supplier class
 
-    public int getSupplierId() {
+    public Integer getSupplierId() {
         return supplierId.get();
     }
 
