@@ -33,6 +33,9 @@ public class SupplierController {
     private URL location;
 
     @FXML
+    private Button btnSave;
+
+    @FXML
     private Button btnAdd;
 
     @FXML
@@ -71,6 +74,7 @@ public class SupplierController {
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'supplier-view.fxml'.";
         assert txtSupName != null : "fx:id=\"txtSupName\" was not injected: check your FXML file 'supplier-view.fxml'.";
         assert txtSupplierId != null : "fx:id=\"txtSupplierId\" was not injected: check your FXML file 'supplier-view.fxml'.";
+        assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'supplier-view.fxml'.";
 
         colSupplierId.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("SupplierId"));
         colsupName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("SupName"));
@@ -81,21 +85,21 @@ public class SupplierController {
 
         //when the table view is selected
 
-//        tvSuppliers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Supplier>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Supplier> observableValue, Supplier supplier, Supplier t1) {
-//                if(tvSuppliers.getSelectionModel().isSelected(tvSuppliers.getSelectionModel().getSelectedIndex()))
-//                Platform.runLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        txtSupName.setText(t1.getSupName());
-//                        //txtSupplierId.setText(String.valueOf(t1.getSupplierId()));
-//
-//
-//                    }
-//                });
-//            }
-//        });
+        tvSuppliers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Supplier>() {
+            @Override
+            public void changed(ObservableValue<? extends Supplier> observableValue, Supplier supplier, Supplier t1) {
+                if(tvSuppliers.getSelectionModel().isSelected(tvSuppliers.getSelectionModel().getSelectedIndex()))
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtSupName.setText(t1.getSupName());
+                        txtSupplierId.setText(String.valueOf(t1.getSupplierId()));
+
+
+                    }
+                });
+            }
+        });
 
         btnEdit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
