@@ -1,0 +1,26 @@
+.background{
+    -fx-background-color: #8F8F8F;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #6F6F6F;
+    -fx-font-size: 16px;
+}
+.table-view{
+    -fx-border-color: #F25E65;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+    -fx-background-color: #DAD9D9;
+}
+
+.btnRed{
+    -fx-background-color: #F25E65;
+    -fx-padding: 5;
+    -fx-border-style: none;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+}
