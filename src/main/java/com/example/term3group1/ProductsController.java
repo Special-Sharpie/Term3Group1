@@ -4,6 +4,9 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -47,6 +50,9 @@ public class ProductsController {
     private Button btnSave;
 
     @FXML
+    private Button btnClear;
+    
+    @FXML
     private Button btnSuppliers;
 
     @FXML
@@ -75,6 +81,7 @@ public class ProductsController {
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'products-view.fxml'.";
         assert btnPackages != null : "fx:id=\"btnPackages\" was not injected: check your FXML file 'products-view.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'products-view.fxml'.";
+        assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'products-view.fxml'.";
         assert btnSuppliers != null : "fx:id=\"btnSuppliers\" was not injected: check your FXML file 'products-view.fxml'.";
         assert tblProducts != null : "fx:id=\"tblProducts\" was not injected: check your FXML file 'products-view.fxml'.";
         assert colProdName != null : "fx:id=\"colProdName\" was not injected: check your FXML file 'products-view.fxml'.";
@@ -88,7 +95,23 @@ public class ProductsController {
         tblProducts.setItems(data);
         getProducts();
 
-        //tblProducts.getSelectionModel().selectedItemProperty().addListener();
+        tblProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
+            @Override
+            public void changed(ObservableValue<? extends Product> observableValue, Product product, Product t1) {
+                if (tblProducts.getSelectionModel().isSelected(tblProducts.getSelectionModel().getSelectedIndex()))
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnAdd.setDisable(true);
+                            btnEdit.setDisable(false);
+                            btnDelete.setDisable(false);
+                            btnSave.setDisable(false);
+                            tbProdName.setText(t1.getProdName());
+                            tbProductId.setText(String.valueOf(t1.getProductId()));
+                        }
+                    });
+                }
+            });
 
         btnAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -96,6 +119,52 @@ public class ProductsController {
                 addProduct();
             }
         });
+
+        btnClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                clearFields();
+            }
+        });
+        
+        btnEdit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                editProduct();
+            }
+        });
+        
+        btnDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                deleteProduct();   
+            }
+        });
+        
+        btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                saveProductChanges();
+            }
+        });
+    }
+
+    private void saveProductChanges() {
+    }
+
+    private void deleteProduct() {
+    }
+
+    private void editProduct() {
+    }
+
+    private void clearFields() {
+        tbProdName.setText("");
+        tbProductId.setText("");
+        btnEdit.setDisable(true);
+        btnDelete.setDisable(true);
+        btnSave.setDisable(true);
+        btnAdd.setDisable(false);
     }
 
     private void addProduct() {
