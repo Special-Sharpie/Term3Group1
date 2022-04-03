@@ -105,9 +105,11 @@ public class ProductsController {
                             btnAdd.setDisable(true);
                             btnEdit.setDisable(false);
                             btnDelete.setDisable(false);
-                            btnSave.setDisable(false);
+                            tbProdName.setDisable(true);
                             tbProdName.setText(t1.getProdName());
                             tbProductId.setText(String.valueOf(t1.getProductId()));
+                            //TODO ADD LIST OF SUPPLIERS FOR PRODUCT
+                            //TODO ADD LIST OF ALL SUPPLIERS FOR PRODUCT MAINTENANCE
                         }
                     });
                 }
@@ -150,21 +152,50 @@ public class ProductsController {
     }
 
     private void saveProductChanges() {
+        Connection con = DB.createConnection();
+        String sql = "update `products` set `ProdName`=? where `ProductId`=?";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, tbProdName.getText());
+            stmt.setInt(2, Integer.parseInt(tbProductId.getText()));
+            int numRows = stmt.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        getProducts();
+        clearFields();
     }
 
     private void deleteProduct() {
+        Connection con = DB.createConnection();
+        String sql = "delete from products where `ProductId`=?";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, Integer.parseInt(tbProductId.getText()));
+            int numRows = stmt.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        getProducts();
+        clearFields();
     }
 
     private void editProduct() {
+        btnAdd.setDisable(true);
+        btnEdit.setDisable(true);
+        btnSave.setDisable(false);
+        tbProdName.setDisable(false);
     }
 
     private void clearFields() {
         tbProdName.setText("");
         tbProductId.setText("");
         btnEdit.setDisable(true);
-        btnDelete.setDisable(true);
         btnSave.setDisable(true);
         btnAdd.setDisable(false);
+        tbProdName.setDisable(false);
     }
 
     private void addProduct() {
