@@ -63,7 +63,18 @@ public class MainController {
         btnProducts.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("products-view.fxml"));
+                Parent parent = null;
+                try {
+                    parent = fxmlLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //ProductsController productsController = fxmlLoader.<ProductsController>getController();
+                Scene scene = new Scene(parent);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.showAndWait();
             }
         });
 

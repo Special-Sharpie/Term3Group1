@@ -1,5 +1,5 @@
 /.idea
-
+/src/main/java/com/example/term3group1/connection.properties
 # Created by https://www.toptal.com/developers/gitignore/api/maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven
 
