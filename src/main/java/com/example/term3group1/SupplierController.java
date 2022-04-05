@@ -94,6 +94,7 @@ public class SupplierController {
                         public void run() {
                             txtSupName.setText(t1.getSupName());
                             txtSupplierId.setText(String.valueOf(t1.getSupplierId()));
+                            txtSupplierId.setDisable(true);
                             mode = "edit";
 
 
@@ -125,22 +126,10 @@ public class SupplierController {
         btnDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                String user = "";
-                String password = "";
-                String url = "";
-                try {
-                    FileInputStream fis = new FileInputStream("c:\\connection.properties");
-                    Properties p = new Properties();
-                    p.load(fis);
-                    url = (String) p.get("url");
-                    user = (String) p.get("user");
-                    password = (String) p.get("password");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
 
                 try {
-                    Connection conn = DriverManager.getConnection(url, user, password);
+                    Connection conn = DB.createConnection();
 
                     String sql = "DELETE FROM `suppliers` WHERE SupplierId=?";
                     PreparedStatement stmt = conn.prepareStatement(sql);
@@ -171,32 +160,20 @@ public class SupplierController {
         btnAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                //save data to database
-//insert statement same as before in saveclicked event
 
-
+                btnDelete.setDisable(true);
+                btnEdit.setDisable(true);
+                btnSave.setDisable(true);
+                addSupplier();
             }
         });
 
     }
 
     public void btnSaveClicked(MouseEvent mouseEvent) {
-                 String user = "";
-                 String password = "";
-                 String url = "";
-                 try {
-                     FileInputStream fis = new FileInputStream("c:\\connection.properties");
-                     Properties p = new Properties();
-                     p.load(fis);
-                     url = (String) p.get("url");
-                     user = (String) p.get("user");
-                     password = (String) p.get("password");
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
 
                  try {
-                     Connection conn = DriverManager.getConnection(url, user, password);
+                     Connection conn = DB.createConnection();
 
                      String sql = null;
                      //if mode is "edit", do an update, else, do an insert
@@ -241,27 +218,18 @@ public class SupplierController {
     }
 
 
+
+
+
+
     private void getSuppliers() {
         data.clear();
-
-        //load the agents from the database
-        String user = "";
-        String password = "";
-        String url = "";
-        try {
-            FileInputStream fis = new FileInputStream("c:\\connection.properties");
-            Properties p = new Properties();
-            p.load(fis);
-            url = (String) p.get("url");
-            user = (String) p.get("user");
-            password = (String) p.get("password");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Connection conn = DB.createConnection();
+        Statement stmt = null;
 
         try {
-            Connection conn = DriverManager.getConnection(url, user, password);
-            Statement stmt = conn.createStatement();
+            //Connection conn = DB.createConnection();
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from suppliers");
             while (rs.next())
             {
@@ -274,6 +242,26 @@ public class SupplierController {
             e.printStackTrace();
         }
 
+    }
+
+    private void addSupplier() {
+        String name = txtSupName.getText();
+        //txtSupplierId.setDisable(true);
+
+        Connection conn = DB.createConnection();
+        String sql = "INSERT INTO `suppliers`(`SupName`) VALUES (?)";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            //first column is the Supplier ID, name is the supplier name column
+            stmt.setString(1, name);
+            int numRows = stmt.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        getSuppliers();
+        txtSupName.clear();
     }
 
 
