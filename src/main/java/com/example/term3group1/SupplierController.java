@@ -92,6 +92,13 @@ public class SupplierController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+
+                            btnAdd.setDisable(true);
+                            btnEdit.setDisable(false);
+                            btnDelete.setDisable(false);
+                            txtSupName.setDisable(true);
+
+
                             txtSupName.setText(t1.getSupName());
                             txtSupplierId.setText(String.valueOf(t1.getSupplierId()));
                             txtSupplierId.setDisable(true);
@@ -226,6 +233,7 @@ private void editSuppliers(){
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        clearFields();
     }
 
 
@@ -271,6 +279,7 @@ private void editSuppliers(){
         }
         getSuppliers();
         txtSupName.clear();
+        clearFields();
     }
 
     private void clearFields() {
