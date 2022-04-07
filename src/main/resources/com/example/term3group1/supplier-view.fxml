@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -15,8 +14,14 @@
 
 <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Travel Experts Suppliers" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term3group1.SupplierController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="489.0">
          <children>
+            <TableView fx:id="tvSuppliers" layoutX="38.8" layoutY="61.8" prefHeight="257.0" prefWidth="359.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="214.0" AnchorPane.topAnchor="49.0">
+              <columns>
+                <TableColumn fx:id="colSupplierId" prefWidth="99.99999314546585" text="Supplier ID" />
+                <TableColumn fx:id="colsupName" minWidth="0.0" prefWidth="180.00003051757812" text="Supplier Name" />
+              </columns>
+            </TableView>
             <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="600.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
@@ -36,20 +41,6 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <ScrollPane layoutX="46.0" layoutY="66.0" prefHeight="362.4" prefWidth="598.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="234.0" prefWidth="298.0">
-                     <children>
-                        <TableView fx:id="tvSuppliers" layoutX="7.0" layoutY="-14.0" prefHeight="205.0" prefWidth="285.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                          <columns>
-                            <TableColumn fx:id="colSupplierId" prefWidth="99.99999314546585" text="Supplier ID" />
-                            <TableColumn fx:id="colsupName" minWidth="0.0" prefWidth="180.00003051757812" text="Supplier Name" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
             <Button fx:id="btnDelete" layoutX="153.0" layoutY="308.0" mnemonicParsing="false" text="Delete" />
             <TextField fx:id="txtSupplierId" layoutX="399.0" layoutY="105.0" />
             <TextField fx:id="txtSupName" layoutX="399.0" layoutY="167.0" />
