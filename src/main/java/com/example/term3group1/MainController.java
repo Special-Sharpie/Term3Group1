@@ -92,11 +92,11 @@ public class MainController {
                     e.printStackTrace();
                 }
 
-                SupplierController supController = fxmlLoader.<SupplierController>getController();
+                //SupplierController supController = fxmlLoader.<SupplierController>getController();
 
                 Scene scene = new Scene(parent);
                 Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
+                //stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);
                 stage.showAndWait();
 
