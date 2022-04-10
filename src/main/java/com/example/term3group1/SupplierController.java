@@ -79,7 +79,7 @@ public class SupplierController {
         colSupplierId.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("SupplierId"));
         colsupName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("SupName"));
         tvSuppliers.setItems(data);
-
+        btnEdit.setDisable(true);
         getSuppliers();
 
 
@@ -96,13 +96,13 @@ public class SupplierController {
                             btnAdd.setDisable(true);
                             btnEdit.setDisable(false);
                             btnDelete.setDisable(false);
-                            txtSupName.setDisable(true);
+                           txtSupName.setDisable(true);
 
 
                             txtSupName.setText(t1.getSupName());
                             txtSupplierId.setText(String.valueOf(t1.getSupplierId()));
                             txtSupplierId.setDisable(true);
-                            mode = "edit";
+                         
 
 
                         }
@@ -123,9 +123,6 @@ public class SupplierController {
         btnEdit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-            btnAdd.setDisable(true);
-            btnDelete.setDisable(true);
-            txtSupplierId.setDisable(true);
             editSuppliers();
 
             }
@@ -134,10 +131,10 @@ public class SupplierController {
         btnDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
-               deleteSuppliers();
+                deleteSuppliers();
             }
         });
+
 
 
         btnAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -151,11 +148,12 @@ public class SupplierController {
 
     public void saveSuppliers() {
 
-        try {
-            Connection conn = DB.createConnection();
+        Connection conn = DB.createConnection();
+        String sql = "UPDATE `suppliers` SET `SupName`=? WHERE `SupplierId`=?";
 
-            String sql = "UPDATE `suppliers` SET `SupName`=? WHERE SupplierId=?";
-            //if mode is "edit", do an update, else, do an insert
+        try {
+
+
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, txtSupName.getText());
@@ -173,66 +171,39 @@ public class SupplierController {
 
 
 private void editSuppliers(){
-    //String name = txtSupName.getText();
+
     btnAdd.setDisable(true);
     btnEdit.setDisable(true);
-    btnDelete.setDisable(true);
-    txtSupplierId.setDisable(true);
-    txtSupName.setDisable(false);
-    //txtSupplierId.setDisable(true);
+    btnSave.setDisable(false);
 
-//    Connection conn = DB.createConnection();
-//    //String sql = "INSERT INTO `suppliers`(`SupName`) VALUES (?)";
-//    String sql = "UPDATE `suppliers` SET `SupName`=? WHERE SupplierId=?";
-//    PreparedStatement stmt = null;
-//    try {
-//        stmt = conn.prepareStatement(sql);
-//        //first column is the Supplier ID, name is the supplier name column
-//        stmt.setString(1, name);
-//        int numRows = stmt.executeUpdate();
-//        conn.close();
-//    } catch (SQLException e) {
-//        e.printStackTrace();
-//    }
-//    getSuppliers();
-//    txtSupName.clear();
+    txtSupName.setDisable(false);
+
 }
 
 
 
-    public void processSupplier(Supplier s) {
-        txtSupplierId.setText(s.getSupplierId() + "");
-        txtSupName.setText(s.getSupName());
-    }
-
 
     private void deleteSuppliers(){
 
-        try {
-            Connection conn = DB.createConnection();
+        Connection conn = DB.createConnection();
 
-            String sql = "DELETE FROM `suppliers` WHERE SupplierId=?";
+
+            String sql = "delete from suppliers where `SupplierId`=?";
+
+        try {
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, Integer.parseInt(txtSupplierId.getText()));
             int numRows = stmt.executeUpdate();
-            if (numRows == 0) {
-                System.out.println("update failed");
-            }
+
             conn.close();
 
-//                    Node node = (Node) mouseEvent.getSource();
-//                    Stage stage = (Stage) node.getScene().getWindow();
-//                    stage.close();
 
-            //get reference to stage and close it
-        } catch (SQLIntegrityConstraintViolationException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Delete failed");
-            alert.setContentText("Agent has customers and cannot be deleted");
-            alert.showAndWait();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        getSuppliers();
+
         clearFields();
     }
 
@@ -261,25 +232,30 @@ private void editSuppliers(){
     }
 
     private void addSupplier() {
-       //String name = txtSupName.getText();
-        //txtSupplierId.setDisable(true);
 
         Connection conn = DB.createConnection();
-        String sql = "INSERT INTO `suppliers`(`SupplierId`, `SupName`) VALUES (null,?)";
-        //String sql = "INSERT INTO `suppliers`(`SupplierId`, `SupName`) VALUES (null,?)";
-        //PreparedStatement stmt = null;
+        String sql = "INSERT INTO `suppliers`(`SupplierId`,`SupName`) VALUES (null,?)";
+//        String sql = "INSERT INTO sup, ps " +
+//                "from products_suppliers ps join suppliers sup " +
+//                "on sup.SupplierId = ps.ProductId " +
+//                "WHERE SupplierId=?";
+
+
+        PreparedStatement stmt = null;
         try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
+
+
+            stmt = conn.prepareStatement(sql);
             //first column is the Supplier ID, name is the supplier name column
             stmt.setString(1, txtSupName.getText());
-            //int numRows = stmt.executeUpdate();
+            int numRows = stmt.executeUpdate();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         getSuppliers();
         txtSupName.clear();
-        clearFields();
+        //clearFields();
     }
 
     private void clearFields() {
