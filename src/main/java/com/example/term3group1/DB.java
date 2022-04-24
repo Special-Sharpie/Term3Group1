@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class DB {
     //Method that creates a database connection, returns a Connection
-    public static Connection createConnection(){
+    public static Connection createConnection() throws ClassNotFoundException{
         String user = "";
         String password = "";
         String url = "";
@@ -26,6 +26,7 @@ public class DB {
             e.printStackTrace();
         }
         try{
+        	Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(
                     url,
                     user,

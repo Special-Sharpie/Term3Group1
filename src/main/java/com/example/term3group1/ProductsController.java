@@ -73,7 +73,7 @@ public class ProductsController {
     ObservableList<Product> data = FXCollections.observableArrayList();
 
     @FXML
-    void initialize() {
+    void initialize() throws ClassNotFoundException {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'products-view.fxml'.";
         assert btnAgents != null : "fx:id=\"btnAgents\" was not injected: check your FXML file 'products-view.fxml'.";
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'products-view.fxml'.";
@@ -118,7 +118,12 @@ public class ProductsController {
         btnAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                addProduct();
+                try {
+					addProduct();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -139,19 +144,29 @@ public class ProductsController {
         btnDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                deleteProduct();   
+                try {
+					deleteProduct();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}   
             }
         });
         
         btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                saveProductChanges();
+                try {
+					saveProductChanges();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
     }
 
-    private void saveProductChanges() {
+    private void saveProductChanges() throws ClassNotFoundException {
         Connection con = DB.createConnection();
         String sql = "update `products` set `ProdName`=? where `ProductId`=?";
         try {
@@ -167,7 +182,7 @@ public class ProductsController {
         clearFields();
     }
 
-    private void deleteProduct() {
+    private void deleteProduct() throws ClassNotFoundException {
         Connection con = DB.createConnection();
         String sql = "delete from products where `ProductId`=?";
         try {
@@ -198,10 +213,16 @@ public class ProductsController {
         tbProdName.setDisable(false);
     }
 
-    private void addProduct() {
+    private void addProduct() throws ClassNotFoundException {
         String name = tbProdName.getText();
 
-        Connection con = DB.createConnection();
+        Connection con = null;
+		try {
+			con = DB.createConnection();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         String sql = "INSERT INTO `products`(`ProdName`) VALUES (?)";
         PreparedStatement stmt = null;
         try {
@@ -216,7 +237,7 @@ public class ProductsController {
         tbProdName.clear();
     }
 
-    private void getProducts() {
+    private void getProducts() throws ClassNotFoundException {
         data.clear();
         Connection con = DB.createConnection();
         Statement stmt = null;

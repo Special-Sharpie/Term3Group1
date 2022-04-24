@@ -65,7 +65,7 @@ public class SupplierController {
     private String mode;
 
     @FXML
-    void initialize() {
+    void initialize() throws ClassNotFoundException {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'supplier-view.fxml'.";
         assert btnDelete != null : "fx:id=\"btnDelete\" was not injected: check your FXML file 'supplier-view.fxml'.";
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'supplier-view.fxml'.";
@@ -114,7 +114,12 @@ public class SupplierController {
         btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                saveSuppliers();
+                try {
+					saveSuppliers();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -131,7 +136,12 @@ public class SupplierController {
         btnDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                deleteSuppliers();
+                try {
+					deleteSuppliers();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -140,13 +150,18 @@ public class SupplierController {
         btnAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                addSupplier();
+                try {
+					addSupplier();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
     }
 
-    public void saveSuppliers() {
+    public void saveSuppliers() throws ClassNotFoundException {
 
         Connection conn = DB.createConnection();
         String sql = "UPDATE `suppliers` SET `SupName`=? WHERE `SupplierId`=?";
@@ -183,7 +198,7 @@ private void editSuppliers(){
 
 
 
-    private void deleteSuppliers(){
+    private void deleteSuppliers() throws ClassNotFoundException{
 
         Connection conn = DB.createConnection();
 
@@ -209,7 +224,7 @@ private void editSuppliers(){
 
 
 
-    private void getSuppliers() {
+    private void getSuppliers() throws ClassNotFoundException {
         data.clear();
         Connection conn = DB.createConnection();
         Statement stmt = null;
@@ -231,7 +246,7 @@ private void editSuppliers(){
 
     }
 
-    private void addSupplier() {
+    private void addSupplier() throws ClassNotFoundException {
 
         Connection conn = DB.createConnection();
         String sql = "INSERT INTO `suppliers`(`SupplierId`,`SupName`) VALUES (null,?)";

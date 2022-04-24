@@ -8,9 +8,9 @@
 
 <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="untitled" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="com.example.term3group1.MainController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="800.0">
          <children>
-            <HBox layoutX="51.0" layoutY="137.0" prefHeight="100.0" prefWidth="515.0" spacing="10.0">
+            <HBox layoutX="30.0" layoutY="137.0" prefHeight="100.0" prefWidth="815.0" spacing="10.0">
                <children>
                   <Button fx:id="btnAgents" lineSpacing="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" text="Agents">
                      <font>
@@ -28,6 +28,16 @@
                      </font>
                   </Button>
                   <Button fx:id="btnPackages" lineSpacing="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" text="Packages">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnBookings" lineSpacing="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" text="Bookings">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnCustomers" lineSpacing="10.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" text="Customers">
                      <font>
                         <Font size="19.0" />
                      </font>

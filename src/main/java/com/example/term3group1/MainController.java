@@ -33,6 +33,12 @@ public class MainController {
 
     @FXML
     private Button btnSuppliers;
+    
+    @FXML
+    private Button btnCustomers;
+    
+    @FXML
+    private Button btnBookings;
 
     @FXML
     void initialize() {
@@ -40,6 +46,8 @@ public class MainController {
         assert btnPackages != null : "fx:id=\"btnPackages\" was not injected: check your FXML file 'main-view.fxml'.";
         assert btnProducts != null : "fx:id=\"btnProducts\" was not injected: check your FXML file 'main-view.fxml'.";
         assert btnSuppliers != null : "fx:id=\"btnSuppliers\" was not injected: check your FXML file 'main-view.fxml'.";
+        assert btnBookings != null : "fx:id=\"btnBookings\" was not injected: check your FXML file 'main-view.fxml'.";
+        assert btnCustomers != null : "fx:id=\"btnCustomers\" was not injected: check your FXML file 'main-view.fxml'.";
 
         //initiate the agents form
         btnAgents.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -97,6 +105,50 @@ public class MainController {
                 Scene scene = new Scene(parent);
                 Stage stage = new Stage();
                 //stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+
+
+            }
+        });
+        
+        //initiate the Bookings form
+
+        btnBookings.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("booking-view.fxml"));
+                Parent parent = null;
+                try {
+                    parent = fxmlLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Scene scene = new Scene(parent);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.showAndWait();
+
+
+            }
+        });
+        
+        //initiate the Customers form
+
+        btnCustomers.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("customer-view.fxml"));
+                Parent parent = null;
+                try {
+                    parent = fxmlLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Scene scene = new Scene(parent);
+                Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.showAndWait();
 
