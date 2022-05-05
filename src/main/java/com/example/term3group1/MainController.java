@@ -1,4 +1,16 @@
+/*
+Daniel Palmer
+PROJ-207-A
+Workshop 8 - JAVAFX App
+2022-05-03
+ */
+
 package com.example.term3group1;
+
+/*
+To use this application, add a User, password, and database connection url to the
+connections.properties file
+ */
 
 import java.io.IOException;
 import java.net.URL;
