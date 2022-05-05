@@ -1,3 +1,8 @@
+/*
+Gurjeet Kaur Pawar
+PROJ-207-A
+ */
+
 package com.example.term3group1;
 
 import javafx.beans.property.SimpleDoubleProperty;
