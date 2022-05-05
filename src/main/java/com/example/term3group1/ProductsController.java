@@ -1,3 +1,10 @@
+/*
+Daniel Palmer
+PROJ-207-A
+Workshop 8 - JAVAFX App
+2022-05-03
+ */
+
 package com.example.term3group1;
 
 import java.net.URL;
@@ -18,10 +25,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import javax.crypto.spec.PSource;
 
 public class ProductsController {
-
+    // Declare Page Controls
     @FXML
     private ResourceBundle resources;
 
@@ -89,12 +95,13 @@ public class ProductsController {
         assert tbProdName != null : "fx:id=\"tbProdName\" was not injected: check your FXML file 'products-view.fxml'.";
         assert tbProductId != null : "fx:id=\"tbProductId\" was not injected: check your FXML file 'products-view.fxml'.";
 
-
+        // Load all products from database into table view
         colProductId.setCellValueFactory(new PropertyValueFactory<Product, Integer>("ProductId"));
         colProdName.setCellValueFactory(new PropertyValueFactory<Product, String>("ProdName"));
         tblProducts.setItems(data);
         getProducts();
 
+        // Handles the selection change of the table view, loading with page fields withe selected product data
         tblProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observableValue, Product product, Product t1) {
@@ -102,19 +109,18 @@ public class ProductsController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            // Enables and disables buttons for ease of use
                             btnAdd.setDisable(true);
                             btnEdit.setDisable(false);
                             btnDelete.setDisable(false);
                             tbProdName.setDisable(true);
                             tbProdName.setText(t1.getProdName());
                             tbProductId.setText(String.valueOf(t1.getProductId()));
-                            //TODO ADD LIST OF SUPPLIERS FOR PRODUCT
-                            //TODO ADD LIST OF ALL SUPPLIERS FOR PRODUCT MAINTENANCE
                         }
                     });
                 }
             });
-
+        // Handles the Add Button on click event, calls addProduct method
         btnAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -126,21 +132,22 @@ public class ProductsController {
 				}
             }
         });
-
+        // Handles the Clear Button on click event, calls clearField method
         btnClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 clearFields();
             }
         });
-        
+
+        // Handles the Edit Button on click event, calls editProduct method
         btnEdit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 editProduct();
             }
         });
-        
+        // Handles the Delete Button on click event, calls deleteProduct method
         btnDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -152,7 +159,7 @@ public class ProductsController {
 				}   
             }
         });
-        
+        // Handles the Save Button on click event, calls saveProductChanges method
         btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -165,7 +172,7 @@ public class ProductsController {
             }
         });
     }
-
+    // Saves the requested product changes to the database
     private void saveProductChanges() throws ClassNotFoundException {
         Connection con = DB.createConnection();
         String sql = "update `products` set `ProdName`=? where `ProductId`=?";
@@ -181,7 +188,8 @@ public class ProductsController {
         getProducts();
         clearFields();
     }
-
+    // Removes the requested product from the database
+    // (likely will not work on existing products due to foreign key constraints that have not been handled)
     private void deleteProduct() throws ClassNotFoundException {
         Connection con = DB.createConnection();
         String sql = "delete from products where `ProductId`=?";
@@ -196,14 +204,14 @@ public class ProductsController {
         getProducts();
         clearFields();
     }
-
+    // Alters the page controls to allow for data modification
     private void editProduct() {
         btnAdd.setDisable(true);
         btnEdit.setDisable(true);
         btnSave.setDisable(false);
         tbProdName.setDisable(false);
     }
-
+    // Resets the page, clearing all values from the controls, without saving changes made to products
     private void clearFields() {
         tbProdName.setText("");
         tbProductId.setText("");
@@ -213,6 +221,7 @@ public class ProductsController {
         tbProdName.setDisable(false);
     }
 
+    // Add a product to the database
     private void addProduct() throws ClassNotFoundException {
         String name = tbProdName.getText();
 
@@ -236,7 +245,7 @@ public class ProductsController {
         getProducts();
         tbProdName.clear();
     }
-
+    // Selects all the products from the date base
     private void getProducts() throws ClassNotFoundException {
         data.clear();
         Connection con = DB.createConnection();
