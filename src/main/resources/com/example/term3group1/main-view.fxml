@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="446.0" prefWidth="1120.0" styleClass="background" stylesheets="@index.css" text="untitled" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.term3group1.MainController">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="530.0" prefWidth="896.0" styleClass="background" stylesheets="@index.css">
@@ -48,7 +49,7 @@
                      </font>
                   </Button>
                </children>
-            </Group>
+            </HBox>
          </children></AnchorPane>
   </content>
 </TitledPane>
